@@ -17,30 +17,13 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { projectFirestore } from '../firebase/config'
+
+import getWishes from '../composables/getWishes'
 
 export default {
   setup() {
-    const wishList = ref([])
 
-    const error = ref(null)
-
-    const load = async () => {
-      try {
-        const res = await projectFirestore.collection('wishList').get()
-
-        if (!res.docs.length) {
-          throw Error('Please, make a wish !')
-        }
-
-        wishList.value = res.docs.map((doc) => {
-          return { ...doc.data(), id: doc.id }
-        })
-      } catch (err) {
-        error.value = err.message
-      }
-    }
+    const { wishList, error, load } = getWishes()
 
     load()
 
