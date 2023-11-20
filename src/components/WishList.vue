@@ -1,30 +1,20 @@
 <template>
-  <div>
+  <div class="conrainer">
     <p>{{ error }}</p>
 
-    <div class="wishItem" v-for="item in wishList" :key="item.title">
-        <router-link :to="{ name: 'singleWish', params: { id: item.id } }">
-      <div class="item-title">
-        <h3>{{ item.title }}</h3>
-      </div>
-      <div>
-        {{ item.description }}
-      </div>
-      <div>
-        {{ item.price }}
-      </div>
-    </router-link>
+    <div v-for="wish in wishList" :key="wish.title">
+      <WishCard :wish="wish" />
     </div>
   </div>
 </template>
 
 <script>
-
 import getWishes from '../composables/getWishes'
+import WishCard from './WishCard.vue'
 
 export default {
+  components: { WishCard },
   setup() {
-
     const { wishList, error, load } = getWishes()
 
     load()
