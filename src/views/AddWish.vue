@@ -4,7 +4,6 @@
     <div>
       <p><label for="">Title</label></p>
       <input type="text" v-model="title" />
-      <p>{{ title }}</p>
     </div>
     <div>
       <p><label for="">Description</label></p>
@@ -27,38 +26,13 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { projectFirestore } from '../firebase/config'
-import { useRouter } from 'vue-router'
+import addWish from '../composables/addWish'
 
 export default {
   setup() {
-    const router = useRouter()
+    const { handleSubmit } = addWish()
 
-    const title = ref('')
-    const price = ref(0)
-    const description = ref('')
-    const link = ref('')
-    const imageUrl = ref('')
-
-    const handleSubmit = async () => {
-      const newWish = {
-        title: title.value,
-        price: price.value,
-        description: description.value,
-        link: link.value,
-        image: imageUrl.value
-      }
-
-      try {
-        const res = await projectFirestore.collection('wishList').add(newWish)
-      } catch (error) {
-        console.log(error)
-      }
-      router.push({ name: 'home' })
-    }
-
-    return { title, price, description, link, imageUrl, handleSubmit }
+    return { handleSubmit }
   }
 }
 </script>
