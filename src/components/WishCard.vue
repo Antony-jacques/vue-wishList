@@ -7,29 +7,38 @@
       <div class="card-title">
         <h3>{{ wish.title }}</h3>
       </div>
-      <div>
-        {{ wish.description }}
-      </div>
       <div class="card-price">
-        <h3>{{ wish.price }}</h3>
+        <h3>{{ wish.price }} €</h3>
+      </div>
+      <div>
+        <div @click="toggleDescription" class="description-header">
+          Plus d'infos
+        </div>
+        <div class="card-description" v-show="showDescription">
+          {{ wish.description }}
+        </div>
       </div>
     </div>
     <div>
-      <router-link :to="{ name: 'singleWish', params: { id: wish.id } }">
-        Detail du souhait
-      </router-link>
     </div>
     <div>
-      <button><a target="blank" :href="wish.link">link to wish</a></button>
+      <button><a target="blank" :href="wish.link">Acheter</a></button>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue'
+
 export default {
   props: ['wish'],
   setup(props) {
-    return {}
+    const showDescription = ref(false)
+    const toggleDescription = () => {
+      showDescription.value = !showDescription.value
+    }
+
+    return { showDescription, toggleDescription }
   }
 }
 </script>
@@ -48,13 +57,34 @@ export default {
 }
 
 .card .card-content {
-  padding: 0 3rem;
 }
 
 .card .card-title,
 .card-price {
-  margin: 2rem auto;
+  margin: 1rem 0;
   font-weight: bold;
+}
+
+.card-title {
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 1rem;
+}
+
+.card-price {
+  border-top: 1px solid #eee;
+  padding: 1rem;
+}
+
+.card-title,
+.card-price,
+.card-description,
+.description-header {
+  padding: 1rem;
+}
+
+.description-header {
+  background-color: #eee;
 }
 
 .card button {
