@@ -1,6 +1,6 @@
 <template>
   <h1>Addwish</h1>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="handleSubmit(newWish)">
     <div>
       <p><label for="">Title</label></p>
       <input type="text" v-model="title" />
@@ -26,13 +26,28 @@
 </template>
 
 <script>
-import addWish from '../composables/addWish'
+import { reactive, ref } from 'vue'
+import { addWish } from '../composables/addWish'
 
 export default {
   setup() {
-    const { handleSubmit } = addWish()
+    const title = ref('')
+    const price = ref(0)
+    const description = ref('')
+    const link = ref('')
+    const imageUrl = ref('')
 
-    return { handleSubmit }
+    const newWish = reactive({
+      title,
+      price,
+      description,
+      link,
+      imageUrl
+    })
+
+    const { handleSubmit } = addWish(newWish)
+
+    return { title, price, newWish, description, link, imageUrl, handleSubmit }
   }
 }
 </script>

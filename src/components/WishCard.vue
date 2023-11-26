@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <img :src="wish.image" alt="" />
+      <img :src="wish.imageUrl" alt="wish image" />
     </div>
     <div class="card-content">
       <div class="card-title">
