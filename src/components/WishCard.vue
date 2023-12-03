@@ -33,7 +33,7 @@ import { ref } from 'vue'
 export default {
   props: ['wish'],
   setup(props) {
-    const showDescription = ref(false)
+    const showDescription = ref(true)
     const toggleDescription = () => {
       showDescription.value = !showDescription.value
     }
